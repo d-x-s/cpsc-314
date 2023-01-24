@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>CPSC 314 Jan 2023    Assmt 1</title>
+    <style>
+      body { margin: 0; } canvas {width: 100%;
+      height: 100% }
+    </style>
+    <link rel="shortcut icon" href="images/favicon.png" />
+  </head>
+  <body>
+    <div id="canvas"></div>
+    <script src="js/three.min.js"></script>
+    <script src="js/OBJLoader.js"></script>
+    <script src="js/SourceLoader.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script src="js/KeyboardState.js"></script> <!-- By Jerome Etienne: http://jetienne.com/ -->
+
+<script id="teapotVertexShader" type="x-shader/x-vertex">
+varying vec3 varyingNormal;
+void main()
+{
+        varyingNormal = normal;
+	vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+	gl_Position = projectionMatrix * mvPosition;
+}
+</script>
+
+<script id="teapotFragmentShader" type="x-shader/x-fragment">
+uniform sampler2D floorTexture;
+varying vec3 varyingNormal;
+void main( void ) {
+
+    // Set final rendered color according to the surface normal
+    vec3 N = normalize(varyingNormal);
+//    vec3 color = vec3(0.5,0.5,0.5);    // grey color
+    vec3 color = N;
+    gl_FragColor = vec4(color, 1.0);
+}
+</script>
+
+
+<script src="a1.js"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,35 @@
+1) Introduction to Three.js and Shaders
+
+a) change console.log message to my name
+
+b) result of division by zero results in INFINITY
+
+c) you get an uncaughtReferenceError
+
+d) the output is undefined
+
+e) nothing happens (it's not mandatory in JS)
+
+f) a = 10, b = 15 because of variable scoping
+
+g) renderer.setClearColor(0x00ff00);     
+
+h) n/a 
+
+i) see a1.js
+
+j) see a1.js
+
+k)
+
+l)
+
+m)
+
+n)
+
+o)
+
+p)
+
+q) Creative Component (see README.txt)

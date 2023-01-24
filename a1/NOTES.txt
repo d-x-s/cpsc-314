@@ -20,16 +20,16 @@ i) see a1.js
 
 j) see a1.js
 
-k)
+k) see a1.js
 
-l)
+l) see checkKeyboard function
 
-m)
+m) creates a spike on the handle
 
-n)
+n) shader could not compile error
 
-o)
+o) see a1.js
 
-p)
+p) see a1.js
 
 q) Creative Component (see README.txt)

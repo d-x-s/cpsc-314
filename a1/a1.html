@@ -30,12 +30,18 @@ void main()
 uniform sampler2D floorTexture;
 varying vec3 varyingNormal;
 void main( void ) {
-
     // Set final rendered color according to the surface normal
     vec3 N = normalize(varyingNormal);
-//    vec3 color = vec3(0.5,0.5,0.5);    // grey color
+    // vec3 color = vec3(0.5,0.5,0.5);    // grey color
     vec3 color = N;
-    gl_FragColor = vec4(color, 1.0);
+
+    // define a fixed lighting direction
+    vec3 L = vec3(0.0,0.0,1.0);
+    float i = dot(N,L);
+  
+    // gl_FragColor = vec4(color, 1.0);
+    // gl_FragColor = vec4(0, 0, 128, 0);
+    gl_FragColor = vec4(i, i, i, i);
 }
 </script>
 

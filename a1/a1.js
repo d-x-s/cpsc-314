@@ -32,7 +32,7 @@ canvas.appendChild(renderer.domElement);
 
 // SETUP CAMERA
 var camera = new THREE.PerspectiveCamera(30,1,0.01,1e99); // view angle, aspect ratio, near, far
-camera.position.set(0,12,20);
+camera.position.set(0,12,50);
 camera.lookAt(0,0,0);
 scene.add(camera);
 
@@ -180,7 +180,7 @@ scene.add(floor);
 ///////////////////////////////////////////////////////////////////////
 
 lightObjGeometry = new THREE.SphereGeometry(0.3, 32, 32);    // radius, segments, segments
-lightObjMaterial = new THREE.MeshBasicMaterial( {color: 0xff0000} );
+lightObjMaterial = new THREE.MeshBasicMaterial( {color: 0xdFFFF00} );
 lightObj = new THREE.Mesh(lightObjGeometry, lightObjMaterial);
 lightObj.position.set(0,4,2);
 lightObj.position.set(light.position.x, light.position.y, light.position.z);
@@ -270,8 +270,53 @@ loader.load( 'obj/teapot.obj', function ( object ) {
 		    child.material = teapotMaterial;
 		}
 	} );
+  object.tex
 	scene.add( object );
 }, onProgress, onError );
+
+/////////////////////////////////////////////////////////////////////////////////////
+// Eagle Object loaded from OBJ file, rendered using teapotMaterial
+// eagle from https://free3d.com/3d-model/eagle-v1--624087.html
+/////////////////////////////////////////////////////////////////////////////////////
+
+var manager = new THREE.LoadingManager();
+        manager.onProgress = function ( item, loaded, total ) {
+	console.log( item, loaded, total );
+};
+
+var onProgress = function ( xhr ) {
+	if ( xhr.lengthComputable ) {
+		var percentComplete = xhr.loaded / xhr.total * 100;
+		console.log( Math.round(percentComplete, 2) + '% downloaded' );
+	}
+};
+var onError = function ( xhr ) {
+};
+var loader = new THREE.OBJLoader( manager );
+loader.load( 'obj/eagle.obj', function ( object ) {
+	object.traverse( function ( child ) {
+		if ( child instanceof THREE.Mesh ) {
+		    child.material = teapotMaterial;
+		}
+	} );
+
+  object.translateZ( 10 );
+  object.rotation.x = -0.5*Math.PI;
+	scene.add( object );
+}, onProgress, onError );
+
+floorTexture = new THREE.TextureLoader().load('images/tbird.jpg');
+floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
+floorTexture.repeat.set(1,1);
+floorMaterial = new THREE.MeshBasicMaterial({ map: floorTexture, side: THREE.DoubleSide });
+floorGeometry = new THREE.PlaneBufferGeometry(15,15);    // x,y size 
+floor1 = new THREE.Mesh(floorGeometry, floorMaterial);
+floor1.position.z = 10;
+floor1.position.y = 7;
+// floor1.rotation.x = -Math.PI / 2;
+floor1.rotation.y = Math.PI;
+floor.rotation.z = 5;
+scene.add(floor1);
 
 ///////////////////////////////////////////////////////////////////////////////////////
 // LISTEN TO KEYBOARD
@@ -280,15 +325,30 @@ loader.load( 'obj/teapot.obj', function ( object ) {
 var keyboard = new THREEx.KeyboardState();
 function checkKeyboard() {
   if (keyboard.pressed("W")) {
-    console.log('W pressed');
-    light.position.y += 0.1;
-  } else if (keyboard.pressed("S"))
-    light.position.y -= 0.1;
-  if (keyboard.pressed("A"))
-    light.position.x -= 0.1;
-  else if (keyboard.pressed("D"))
-    light.position.x += 0.1;
-  lightObj.position.set(light.position.x, light.position.y, light.position.z);
+    if (light.position.y <= 5) {
+      console.log('W pressed');
+      light.position.y += 0.1;
+    }
+
+  } else if (keyboard.pressed("S")) {
+    if (light.position.y >= - 5) {
+      light.position.y -= 0.1;
+    }
+  }
+
+  if (keyboard.pressed("A")) {
+    if (light.position.x >= -5) {
+      light.position.x -= 0.1;
+      lightObj.position.set(light.position.x, light.position.y, light.position.z);
+    }
+  }
+
+  else if (keyboard.pressed("D")) {
+    if (light.position.x <= 5) {
+      light.position.x += 0.1;
+      lightObj.position.set(light.position.x, light.position.y, light.position.z);
+    }
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////

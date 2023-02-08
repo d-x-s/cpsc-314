@@ -86,7 +86,7 @@ scene.add(worldFrame);
 ///////////////////////////////////////////////////////////////////////
 
 boxGeometry = new THREE.BoxGeometry( 2, 2, 2 );    // width, height, depth
-boxMaterial = new THREE.MeshLambertMaterial( {color: 0x7070ff} );
+boxMaterial = new THREE.MeshLambertMaterial( {color: 0xffff00} );
 box = new THREE.Mesh( boxGeometry, boxMaterial );
 box.position.set(-4, 1, 2);
 scene.add( box );
